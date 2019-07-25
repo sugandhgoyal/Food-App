@@ -12,6 +12,10 @@ const Wrapper = styled.div``;
 const Heading = styled.h1`
   margin: 2% 0;
   text-align: center;
+  @media screen and (max-width: 728px){
+    font-size: 18px;
+    margin: 5% 0;
+  }
 `;
 
 const SearchIcon = styled.img`
@@ -129,6 +133,7 @@ class Home extends React.Component {
   }
 
   addToCart = (product) => {
+    console.log(product);
     toast(`${product.title} Added to cart!!!!`);
 
     if (!localStorage.getItem('productsAddedToCart')) {
@@ -136,7 +141,7 @@ class Home extends React.Component {
     }
 
     let cartItems = JSON.parse(localStorage.getItem('productsAddedToCart'));
-    debugger
+
     cartItems.push(product);
     localStorage.setItem('productsAddedToCart', JSON.stringify(cartItems));
     this.setState({

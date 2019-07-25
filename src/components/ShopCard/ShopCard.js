@@ -102,6 +102,9 @@ const ImageCard = styled.img`
   object-fit:cover;
   height: auto;
   max-height: 180px;
+  @media screen and (max-width: 400px){
+    max-height: 100px;
+  }
 `;
 
 const BottomPart = styled.div`
@@ -132,9 +135,9 @@ const Price = styled.div`
 const OriginalProductValue = styled.div`
   font-weight: bold;
   font-size: 11px;
-  color: grey;
+  color: ${(props) => props.myOrdersPage === true ? "black" : "grey"};
   align-self: center;
-  text-decoration: line-through;
+  text-decoration: ${(props) => props.myOrdersPage === true ? "none" : "line-through"};
   @media (min-width: 600px) {
     font-size: 15px;
   }
@@ -154,6 +157,7 @@ class ShopCard extends Component {
       rating,
       addToCart,
       showButton,
+      myOrdersPage,
     } = this.props;
 
     return (
@@ -168,8 +172,15 @@ class ShopCard extends Component {
             </LeftPart>
             <BottomPart>
               <div id="above-part">
-                {price && <Price>INR {parseInt(price)}</Price>}
-                {discount === true && <OriginalProductValue>INR {newPrice}</OriginalProductValue>}
+                {
+                  (myOrdersPage === true) ?
+                    <OriginalProductValue myOrdersPage={myOrdersPage}>INR {newPrice}</OriginalProductValue>
+                    :
+                    <div>
+                      {price && <Price>INR {parseInt(price)}</Price>}
+                      {discount === true && <OriginalProductValue myOrdersPage={myOrdersPage}>INR {newPrice}</OriginalProductValue>}
+                    </div>
+                }
               </div>
               <BuyButton
                 showButton={showButton}
@@ -179,7 +190,8 @@ class ShopCard extends Component {
                   price,
                   categoryName,
                   image,
-                  newPrice
+                  newPrice,
+                  rating
                 })}>
                 Add to cart
                   </BuyButton>

@@ -12,6 +12,10 @@ const Wrapper = styled.div``;
 const Heading = styled.h1`
   margin: 2% 0;
   text-align: center;
+  @media screen and (max-width: 728px){
+    font-size: 18px;
+    margin: 5% 0;
+  }
 `;
 
 
@@ -19,7 +23,7 @@ const CardsWrapper = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  margin: 0 2%;
+  margin: 4% 2% 4% 2%;
 `;
 
 const CustomShopCard = styled(ShopCard)`
@@ -77,33 +81,35 @@ class MyOrders extends React.Component {
       return (
         <Wrapper>
           <Heading>My Orders</Heading>
-          
-            {orderedProducts && orderedProducts.length > 0 &&
-              orderedProducts.map((item, index) => (
-                 <OrderItem> <div className="orderId"> Order Id:<strong> {item.orderId} </strong></div>
-                 <div className="orderId"> Grand Total:<strong> Rs. {item.grandTotal} </strong></div>
-                 <CardsWrapper>
-                {
-                item.items.map((orderedItems) => {
-                  return <CustomShopCard
-                  key={index}
-                  discount={orderedItems.discount}
-                  image={orderedItems.image}
-                  title={orderedItems.title}
-                  newPrice={orderedItems.new_price}
-                  price={orderedItems.price}
-                  categoryName={orderedItems.category}
-                  slug={orderedItems.slug}
-                  rating = {orderedItems.rating}
-                  showButton={false}
-                />
-                })
-            }
-            </CardsWrapper>
-            </OrderItem>
-              ))
-            }
-          
+
+          {orderedProducts && orderedProducts.length > 0 &&
+            orderedProducts.map((item, index) => (
+              <OrderItem> <div className="orderId"> Order Id:<strong> {item.orderId} </strong></div>
+                <div className="orderId"> Grand Total:<strong> Rs. {item.grandTotal} </strong></div>
+                <div className="orderId"> Order On:<strong> {item.orderTime} </strong></div>
+                <CardsWrapper>
+                  {
+                    item.items.map((orderedItems) => {
+                      return <CustomShopCard
+                        key={index}
+                        discount={orderedItems.discount}
+                        image={orderedItems.image}
+                        title={orderedItems.title}
+                        newPrice={orderedItems.newPrice}
+                        price={orderedItems.price}
+                        categoryName={orderedItems.category}
+                        slug={orderedItems.slug}
+                        rating={orderedItems.rating}
+                        showButton={false}
+                        myOrdersPage={true}
+                      />
+                    })
+                  }
+                </CardsWrapper>
+              </OrderItem>
+            ))
+          }
+
         </Wrapper>
       )
     }

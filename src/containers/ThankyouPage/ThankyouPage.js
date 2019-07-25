@@ -15,26 +15,36 @@ const Wrapper = styled.div`
 `;
 
 export default class ThankyouPage extends Component {
-  render() {
 
+  render() {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     let temp = {};
+    const {
+      history,
+    } = this.props;
+
+    if (!localStorage.getItem('logged_in') || localStorage.getItem('logged_in') !== 'true') {
+      history.push('/login');
+    }
+
     temp.orderId = parseInt(Math.random() * 10000000);
-    temp.orderTime = new Date();
+    temp.orderTime = new Date().toLocaleDateString("en-US", options);
+
     temp.items = JSON.parse(localStorage.getItem('productsAddedToCart'));
     temp.grandTotal = 0;
 
-    temp.items.map((item) => {
+    temp.items.forEach((item) => {
       temp.grandTotal += item.price;
     })
 
-    if(!localStorage.getItem('orderedProducts')) {
+    if (!localStorage.getItem('orderedProducts')) {
       localStorage.setItem('orderedProducts', '[]');
       let orders = [];
       orders.push(temp);
       localStorage.setItem('orderedProducts', JSON.stringify(orders));
     }
-    else{
-      let orders = JSON.parse( localStorage.getItem('orderedProducts') );
+    else {
+      let orders = JSON.parse(localStorage.getItem('orderedProducts'));
       orders.push(temp);
       localStorage.setItem('orderedProducts', JSON.stringify(orders))
     }

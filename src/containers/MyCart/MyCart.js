@@ -13,6 +13,10 @@ const Wrapper = styled.div`
 const Heading = styled.h1`
   margin: 2% 0;
   text-align: center;
+  @media screen and (max-width: 728px){
+    font-size: 18px;
+    margin: 5% 0;
+  }
 `;
 
 
@@ -26,6 +30,9 @@ const CardsWrapper = styled.div`
 const CustomShopCard = styled(ShopCard)`
   width: 29%;
   margin-right: 3%;
+  @media screen and (max-width: 728px) {
+    width: 40%;
+  }
 `;
 
 const ConfirmOrderButton = styled.button`
