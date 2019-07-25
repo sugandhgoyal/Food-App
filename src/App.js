@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MyCart from './containers/MyCart/MyCart'
 import Login from './containers/Login/Login'
+import ThankyouPage from './containers/ThankyouPage/ThankyouPage'
 
 class App extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Route path="/my-orders" component={MyOrders} />
           <Route path="/my-cart" component={MyCart} />
           <Route path="/login" component={Login} />
+          <Route path="/transaction/sucess" component={ThankyouPage} />
         </Router>
       </div>
     )

@@ -80,12 +80,12 @@ const LeftPart = styled.div`
 `;
 
 const BuyButton = styled(Link)`
+  display: ${(props) => props.showButton === true ? "block" : "none"};
   font-size: 14px;
   border-radius: 4px; 
   background:  #41cae4;
   text-decoration: none !important;
   text-transform: uppercase;
-  /* border: 1px solid #e52364; */
   align-self: center;
   padding: 9px 29px;
   font-weight: 600;
@@ -98,10 +98,10 @@ const BuyButton = styled(Link)`
 `;
 
 const ImageCard = styled.img`
-  width:100%;
+  width: 100%;
   object-fit:cover;
   height: auto;
-  max-height: 204px;
+  max-height: 180px;
 `;
 
 const BottomPart = styled.div`
@@ -141,10 +141,6 @@ const OriginalProductValue = styled.div`
 `;
 
 class ShopCard extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const {
       key,
@@ -154,15 +150,15 @@ class ShopCard extends Component {
       newPrice,
       price,
       categoryName,
-      slug,
       className,
       rating,
       addToCart,
-      location,
+      showButton,
     } = this.props;
+
     return (
       <div className={`shop-card ${className}`}>
-        <AffiliateCard to={`/product/${slug}`} index={key}>
+        <AffiliateCard index={key}>
           <ImageCard className="image" src={image}></ImageCard>
           <CardInfo>
             <LeftPart>
@@ -174,20 +170,19 @@ class ShopCard extends Component {
               <div id="above-part">
                 {price && <Price>INR {parseInt(price)}</Price>}
                 {discount === true && <OriginalProductValue>INR {newPrice}</OriginalProductValue>}
-                {/* {<Price>INR {newPrice}</Price>} */}
               </div>
-              {!(location && location.pathname === "/my-cart") &&
-                <BuyButton
-                  onClick={() => addToCart({
-                    title,
-                    discount,
-                    price,
-                    categoryName,
-                    image,
-                  })}>
-                    Add to cart
+              <BuyButton
+                showButton={showButton}
+                onClick={() => addToCart({
+                  title,
+                  discount,
+                  price,
+                  categoryName,
+                  image,
+                  newPrice
+                })}>
+                Add to cart
                   </BuyButton>
-              }
             </BottomPart>
           </CardInfo>
         </AffiliateCard>

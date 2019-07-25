@@ -122,6 +122,7 @@ class Home extends React.Component {
             slug={item.slug}
             rating={item.rating}
             addToCart={this.addToCart}
+            showButton={true}
           />)
       })
     }
@@ -135,7 +136,7 @@ class Home extends React.Component {
     }
 
     let cartItems = JSON.parse(localStorage.getItem('productsAddedToCart'));
-
+    debugger
     cartItems.push(product);
     localStorage.setItem('productsAddedToCart', JSON.stringify(cartItems));
     this.setState({

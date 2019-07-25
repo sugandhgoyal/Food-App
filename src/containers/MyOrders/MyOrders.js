@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ShopCard from '../../components/ShopCard/ShopCard';
 import styled from 'styled-components';
+import { NoDataDiv } from '../MyCart/MyCart';
 
 const Wrapper = styled.div``;
 
@@ -22,8 +23,21 @@ const CardsWrapper = styled.div`
 `;
 
 const CustomShopCard = styled(ShopCard)`
-  width: 29%;
+  width: 20%;
   margin-right: 3%;
+  @media screen and (max-width: 728px){
+    width: 45%;
+  }
+`;
+
+const OrderItem = styled.div`
+  border: 1px solid #eee;
+  padding: 20px;
+  width: 90%;
+  margin: 2% auto;
+  .orderId {
+    margin: 1% 2%;
+  }
 `;
 
 
@@ -42,35 +56,57 @@ class MyOrders extends React.Component {
 
   render() {
     const {
-      myOrders,
       history,
     } = this.props;
-    
-    if (!localStorage.getItem('logged_in') || localStorage.getItem('logged_in') !== 'true' ) {
+
+    if (!localStorage.getItem('logged_in') || localStorage.getItem('logged_in') !== 'true') {
       history.push('/login');
     }
-    
-    return (
-      <Wrapper>
-        <Heading>My Orders!</Heading>
-        <CardsWrapper>
-          {myOrders &&
-            myOrders.map((item, index) => (
-              <CustomShopCard
-                key={index}
-                discount={item.discount}
-                image={item.image}
-                title={item.name}
-                newPrice={item.new_price}
-                price={item.price}
-                categoryName={item.category}
-                slug={item.slug}
-              />
-            ))
-          }
-        </CardsWrapper>
-      </Wrapper>
-    )
+    let orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
+
+    if (orderedProducts && orderedProducts.length === 0) {
+      return (
+        <NoDataDiv>
+          <div>
+            No orders yet!
+          </div>
+        </NoDataDiv>
+      )
+    }
+    else {
+      return (
+        <Wrapper>
+          <Heading>My Orders</Heading>
+          
+            {orderedProducts && orderedProducts.length > 0 &&
+              orderedProducts.map((item, index) => (
+                 <OrderItem> <div className="orderId"> Order Id:<strong> {item.orderId} </strong></div>
+                 <div className="orderId"> Grand Total:<strong> Rs. {item.grandTotal} </strong></div>
+                 <CardsWrapper>
+                {
+                item.items.map((orderedItems) => {
+                  return <CustomShopCard
+                  key={index}
+                  discount={orderedItems.discount}
+                  image={orderedItems.image}
+                  title={orderedItems.title}
+                  newPrice={orderedItems.new_price}
+                  price={orderedItems.price}
+                  categoryName={orderedItems.category}
+                  slug={orderedItems.slug}
+                  rating = {orderedItems.rating}
+                  showButton={false}
+                />
+                })
+            }
+            </CardsWrapper>
+            </OrderItem>
+              ))
+            }
+          
+        </Wrapper>
+      )
+    }
   }
 }
 

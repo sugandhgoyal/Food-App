@@ -6,7 +6,9 @@ import { withRouter } from 'react-router-dom';
 import ShopCard from '../../components/ShopCard/ShopCard';
 import styled from 'styled-components';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  text-align: center;
+`;
 
 const Heading = styled.h1`
   margin: 2% 0;
@@ -26,6 +28,35 @@ const CustomShopCard = styled(ShopCard)`
   margin-right: 3%;
 `;
 
+const ConfirmOrderButton = styled.button`
+  background: #46afc3;
+  padding: 15px 20px;
+  width: 200px;
+  color: white;
+  border:0;
+  outline: 0;
+  border-radius: 5px;
+  box-sizing: content-box;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 12px;
+  margin: 3%;
+`;
+
+
+export const NoDataDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+
+  div{
+    padding: 70px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.06);
+  }
+`;
 
 class MyCart extends React.Component {
   constructor(props) {
@@ -40,6 +71,10 @@ class MyCart extends React.Component {
     loadMyOrders();
   }
 
+  placeorder = () => {
+    this.props.history.push('/transaction/sucess');
+  }
+
   render() {
     const {
       history
@@ -47,33 +82,44 @@ class MyCart extends React.Component {
 
     let productsAddedToCart = JSON.parse(localStorage.getItem('productsAddedToCart'))
 
-    if (!localStorage.getItem('logged_in') || localStorage.getItem('logged_in') !== 'true' ) {
+    if (!localStorage.getItem('logged_in') || localStorage.getItem('logged_in') !== 'true') {
       history.push('/login');
     }
 
     console.log("productsAddedToCart", productsAddedToCart);
-
-    return (
-      <Wrapper>
-        <Heading>My Cart</Heading>
-        <CardsWrapper>
-          {productsAddedToCart && productsAddedToCart.length > 0 &&
-            productsAddedToCart.map((item, index) => (
-              <CustomShopCard
-                key={index}
-                discount={item.discount}
-                image={item.image}
-                title={item.name}
-                newPrice={item.new_price}
-                price={item.price}
-                categoryName={item.category}
-                slug={item.slug}
-              />
-            ))
-          }
-        </CardsWrapper>
-      </Wrapper>
-    )
+    if (productsAddedToCart && productsAddedToCart.length === 0)
+      return (
+        <NoDataDiv>
+          <div>
+            Your cart is empty!
+        </div>
+        </NoDataDiv>
+      )
+    else {
+      return (
+        <Wrapper>
+          <Heading>My Cart</Heading>
+          <CardsWrapper>
+            {productsAddedToCart && productsAddedToCart.length > 0 &&
+              productsAddedToCart.map((item, index) => {
+                return <CustomShopCard
+                  key={index}
+                  discount={item.discount}
+                  image={item.image}
+                  title={item.title}
+                  newPrice={item.new_price}
+                  price={item.price}
+                  categoryName={item.category}
+                  rating={item.rating}
+                  showButton={false}
+                />
+              })
+            }
+          </CardsWrapper>
+          <ConfirmOrderButton onClick={this.placeorder}>Confirm and Place Order</ConfirmOrderButton>
+        </Wrapper>
+      )
+    }
   }
 }
 

@@ -34,7 +34,6 @@ const Input = styled.input`
   background-color: #fff;
   color: #666;
   letter-spacing: .3px;
-  border: 1
   padding: 10px;
   width: 200px;
   margin: 8px;
@@ -92,7 +91,7 @@ class Login extends React.Component {
         <div>
           <p> Login to continue </p>
           <Input value={this.state.username} name="username" onChange={this.handleChange} type="text" placeholder="Enter your email address" />
-          <Input value={this.state.password} name="password" onChange={this.handleChange} type="text" placeholder="Enter your password" />
+          <Input value={this.state.password} name="password" onChange={this.handleChange} type="password" placeholder="Enter your password" />
           <Button onClick={()=>this.login()}>Submit</Button>
         </div>
       </Wrapper>
