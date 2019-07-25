@@ -133,7 +133,6 @@ class Home extends React.Component {
   }
 
   addToCart = (product) => {
-    console.log(product);
     toast(`${product.title} Added to cart!!!!`);
 
     if (!localStorage.getItem('productsAddedToCart')) {
@@ -156,7 +155,7 @@ class Home extends React.Component {
     } = this.props;
 
     if (event.key === 'Enter')
-      searchData(event.target.value);
+      searchData(event.target.value.toLowerCase());
   }
 
   componentWillReceiveProps(nextProps) {

@@ -93,7 +93,6 @@ class MyCart extends React.Component {
       history.push('/login');
     }
 
-    console.log("productsAddedToCart", productsAddedToCart);
     if (productsAddedToCart && productsAddedToCart.length === 0)
       return (
         <NoDataDiv>

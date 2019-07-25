@@ -15,12 +15,9 @@ export function home(state = initialState, action) {
       return newState;
     case "FETCH_SEARCH_DATA_SUCCESS":
       let newArr = [];
-
       if (action.searchString !== "" && state.food_items && state.food_items.length > 0) {
         state.food_items.forEach(item => {
-          if (item.name === action.searchString) {
-            console.log("sdksd", item, action.searchString)
-
+          if (item.name.toLowerCase() === action.searchString) {
             newArr.push(item);
           }
         });
