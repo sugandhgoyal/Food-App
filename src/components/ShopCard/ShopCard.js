@@ -177,8 +177,8 @@ class ShopCard extends Component {
                     <OriginalProductValue myOrdersPage={myOrdersPage}>INR {newPrice}</OriginalProductValue>
                     :
                     <div>
-                      {price && <Price>INR {parseInt(price)}</Price>}
-                      {discount === true && <OriginalProductValue myOrdersPage={myOrdersPage}>INR {newPrice}</OriginalProductValue>}
+                      {discount === true && <OriginalProductValue myOrdersPage={myOrdersPage}>INR {parseInt(price)}</OriginalProductValue>}
+                      {price && <Price>INR {newPrice}</Price>}
                     </div>
                 }
               </div>

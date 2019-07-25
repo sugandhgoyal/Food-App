@@ -114,7 +114,7 @@ class MyCart extends React.Component {
                   discount={item.discount}
                   image={item.image}
                   title={item.title}
-                  newPrice={item.new_price}
+                  newPrice={item.newPrice}
                   price={item.price}
                   categoryName={item.category}
                   rating={item.rating}
